@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Button, Alert, SafeAreaView } from 'react-native';
 
-export default function Button() {
+export default function ButtonExample() {
   return (
     <SafeAreaView style={styles.container}>
       <Button
