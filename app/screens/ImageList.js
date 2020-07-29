@@ -1,20 +1,19 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, Image, ImageBackground, View, FlatList, SafeAreaView } from 'react-native';
+import { StyleSheet, Text, Image, ActivityIndicator, View, FlatList, SafeAreaView, Button } from 'react-native';
 import colors from '../config/colors';
 import Header from '../components/Header';
 import { connect, useDispatch } from 'react-redux';
-import { searchImagesBy } from './../actions';
+import { searchImagesBy, deleteImages } from './../actions';
 
 function ImageList(props) {
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
-  const dispatch= useDispatch();
+  //const dispatch = useDispatch();
 
-  useEffect((term) => {
-    dispatch(searchImagesBy(term));
-    setData([{}, {}])
-  });
+  /*useEffect((term) => {
+    dispatch(searchImagesBy(term))
+  });*/
 
   //https://api.unsplash.com/search/photos?query=office&client_id=sk6CBTMciDoHkiXCD-GKdV5D4LrtLzCdy1yIGCLBWsA
   /*useEffect(() => {
@@ -25,28 +24,32 @@ function ImageList(props) {
       .finally(() => setLoading(false));
   }, []);*/
 
-  const { fetching, images } = props;
+  const { fetching, images, searchImagesBy, deleteImages } = props;
 
   return (
     <SafeAreaView style={styles.container}>
       <Header></Header>
       {console.log('fetching ', images)}
+      <Text style={styles.title}>{fetching}</Text>
+      <Button title="load images" onPress={() => { searchImagesBy() }}></Button>
 
-      {isLoading ? <Text style={styles.text}>Loading</Text> : (
+      <Button title="get another" onPress={() => { deleteImages() }}></Button>
+
+      {fetching ? <ActivityIndicator/> : (
         <FlatList
-          data={onSearchSubmit('robert')}
+          data={images}
           keyExtractor={({ id }, index) => id}
           renderItem={({ item }) => (
             <View style={styles.box}>
               {/*console.log(item)*/}
-              <Text style={styles.title}>{item.alt_description}</Text>
-              <Image
+              <Text style={styles.title}>{item.name}</Text>
+              {/*<Image
                 resizeMode='contain'
                 style={styles.image}
                 source={{
                   uri: item.urls.raw,
                 }}
-              />
+              />*/}
 
             </View>
           )}
@@ -92,20 +95,22 @@ const styles = StyleSheet.create({
 /*const mapStateToProps = (state) => {
   console.log('map state', state.images);
   return { imagesState: state.images }
-};*/ 
+};*/
 
 const mapStateToProps = (state) => {
-  console.log(state);
+  console.log('mapState ', state);
   return {
     images: state.images,
     fetching: state.fetching,
+    error: state.error
   }
 };
 
 //const mapStateToProps = ({ images }) => ({ images });
-const mapDispatchToProps = (dispatch) => {
-  return { searchImagesBy: () => dispatch(searchImagesBy('robert')) }
-};
+const mapDispatchToProps = (dispatch) => ({ 
+  searchImagesBy: () => dispatch(searchImagesBy()),
+  deleteImages: () => dispatch(deleteImages()) 
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(ImageList);
 

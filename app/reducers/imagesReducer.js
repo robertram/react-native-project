@@ -1,17 +1,35 @@
-import { GET_IMAGES, DELETE_IMAGES, SEARCH_IMAGE } from '../actions/types';
+import { 
+  GET_IMAGES_START, 
+  GET_IMAGES_SUCCESS, 
+  GET_IMAGES_FAILURE,
+  DELETE_IMAGES, 
+  SEARCH_IMAGE } from '../actions/types';
 
 const initialState = {
   searchTerm: '',
-  images: [],
+  images: [{name: 'Cecilia'}],
   fetching: false,
+  error: null,
 }
 
 const imagesReducer = (state = initialState, action) => {
   switch (action.type) {
-    case GET_IMAGES:
+    case GET_IMAGES_START:
       return {
         ...state,
-        images: images + 1,
+        fetching: true,
+      }
+    case GET_IMAGES_SUCCESS:
+      return {
+        ...state,
+        images: action.payload,
+        fetching: false,
+      }
+    case GET_IMAGES_FAILURE:
+      return {
+        ...state,
+        images: action.payload,
+        fetching: false,
       }
     case DELETE_IMAGES:
       return {
