@@ -2,6 +2,7 @@ import { DELETE_IMAGES } from './types';
 import { SEARCH_IMAGE_START } from './types';
 import { GET_IMAGES_SUCCESS } from './types';
 import { GET_IMAGES_FAILURE } from './types';
+import axios from 'axios';
 
 export const getImages = (images) => (
   {
@@ -22,13 +23,26 @@ export const deleteImages = (images) => (
 export function searchImagesBy() {
   console.log('image term')
 
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(getImages());
     return fetch('https://api.unsplash.com/search/photos?query=office&client_id=sk6CBTMciDoHkiXCD-GKdV5D4LrtLzCdy1yIGCLBWsA')
       .then((response) => response.json())
       .then((json) => console.log('result ', json.results))
-      .then(dispatch({type: 'GET_IMAGES_SUCCESS', payload: json.results}))
-      .catch((error) => dispatch({type: 'GET_IMAGES_FAILURE', payload: error}))
+      .then(dispatch({ type: 'GET_IMAGES_SUCCESS', payload: json.results }))
+      .catch((error) => dispatch({ type: 'GET_IMAGES_FAILURE', payload: error }))
       .finally(() => setLoading(false));
   };
 }
+
+export async function axiosSearch() {
+  console.log('axios')
+
+  return (dispatch) => {
+    dispatch(getImages());
+    axios.get('https://api.unsplash.com/search/photos?query=office&client_id=sk6CBTMciDoHkiXCD-GKdV5D4LrtLzCdy1yIGCLBWsA')
+      .then((response) => console.log(response))
+      .then((json) => console.log('result ', json.results))
+      .then(dispatch({ type: 'GET_IMAGES_SUCCESS', payload: json.results }))
+  };
+}
+

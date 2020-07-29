@@ -3,10 +3,17 @@ import React from 'react';
 import { StyleSheet, Text, Image, ImageBackground, View, SafeAreaView } from 'react-native';
 import ImageList from './app/screens/ImageList';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
-import reducers from './app/reducers/imagesReducer';
+import configureStore from './app/store';
+import { createStore, applyMiddleware } from 'redux';
+import imagesReducer from './app/reducers/imagesReducer';
+import thunk from 'redux-thunk';
+import promise from 'redux-promise';
 
-const store = createStore(reducers);
+//Thunk middleware
+const enhancer = applyMiddleware(thunk, promise);
+
+// Creates store, sends the reducer and applies the enhancer middleware
+const store = createStore(imagesReducer, {}, enhancer);
 
 export default function App() {
   return (

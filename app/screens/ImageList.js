@@ -4,7 +4,7 @@ import { StyleSheet, Text, Image, ActivityIndicator, View, FlatList, SafeAreaVie
 import colors from '../config/colors';
 import Header from '../components/Header';
 import { connect, useDispatch } from 'react-redux';
-import { searchImagesBy, deleteImages } from './../actions';
+import { searchImagesBy, deleteImages, axiosSearch } from './../actions';
 
 function ImageList(props) {
   const [isLoading, setLoading] = useState(true);
@@ -24,14 +24,14 @@ function ImageList(props) {
       .finally(() => setLoading(false));
   }, []);*/
 
-  const { fetching, images, searchImagesBy, deleteImages } = props;
+  const { fetching, images, searchImagesBy, deleteImages, axiosSearch } = props;
 
   return (
     <SafeAreaView style={styles.container}>
       <Header></Header>
       {console.log('fetching ', images)}
       <Text style={styles.title}>{fetching}</Text>
-      <Button title="load images" onPress={() => { searchImagesBy() }}></Button>
+      <Button title="load images" onPress={() => { axiosSearch() }}></Button>
 
       <Button title="get another" onPress={() => { deleteImages() }}></Button>
 
@@ -109,7 +109,8 @@ const mapStateToProps = (state) => {
 //const mapStateToProps = ({ images }) => ({ images });
 const mapDispatchToProps = (dispatch) => ({ 
   searchImagesBy: () => dispatch(searchImagesBy()),
-  deleteImages: () => dispatch(deleteImages()) 
+  deleteImages: () => dispatch(deleteImages()),
+  axiosSearch: () => dispatch(axiosSearch()) 
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ImageList);
