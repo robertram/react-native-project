@@ -16,33 +16,31 @@ function ImageList(props) {
   });*/
 
   //https://api.unsplash.com/search/photos?query=office&client_id=sk6CBTMciDoHkiXCD-GKdV5D4LrtLzCdy1yIGCLBWsA
-  /*useEffect(() => {
-    fetch('https://api.unsplash.com/search/photos?query=office&client_id=sk6CBTMciDoHkiXCD-GKdV5D4LrtLzCdy1yIGCLBWsA')
-      .then((response) => response.json())
-      .then((json) => setData(json.results))
-      .catch((error) => console.error(error))
-      .finally(() => setLoading(false));
-  }, []);*/
+  useEffect(() => {
+    setData(images);
+  }, []);
 
   const { fetching, images, searchImagesBy, deleteImages, axiosSearch } = props;
 
   return (
     <SafeAreaView style={styles.container}>
       <Header></Header>
-      {console.log('fetching ', images)}
+      {console.log('fetching ', props)}
       <Text style={styles.title}>{fetching}</Text>
       <Button title="load images" onPress={() => { axiosSearch() }}></Button>
 
       <Button title="get another" onPress={() => { deleteImages() }}></Button>
 
+      {console.log('fetching 2', props)}
+
       {fetching ? <ActivityIndicator/> : (
         <FlatList
-          data={images}
+          data={data}
           keyExtractor={({ id }, index) => id}
           renderItem={({ item }) => (
             <View style={styles.box}>
-              {/*console.log(item)*/}
-              <Text style={styles.title}>{item.name}</Text>
+              {console.log('item ', item)}
+              <Text style={styles.title}>{item.alt_description}</Text>
               {/*<Image
                 resizeMode='contain'
                 style={styles.image}

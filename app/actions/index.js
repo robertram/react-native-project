@@ -8,7 +8,7 @@ export const getImages = (images) => (
   {
     type: SEARCH_IMAGE_START,
     data: images,
-    fetching: false,
+    fetching: true,
     error: null
   }
 );
@@ -17,6 +17,24 @@ export const deleteImages = (images) => (
   {
     type: DELETE_IMAGES,
     data: images,
+  }
+);
+
+export const imageSuccess = (images) => (
+  {
+    type: GET_IMAGES_SUCCESS,
+    data: images,
+    fetching: false,
+    error: null
+  }
+);
+
+export const imageFailure = (error) => (
+  {
+    type: GET_IMAGES_FAILURE,
+    data: images,
+    fetching: false,
+    error: error
   }
 );
 
@@ -40,9 +58,9 @@ export async function axiosSearch() {
   return (dispatch) => {
     dispatch(getImages());
     axios.get('https://api.unsplash.com/search/photos?query=office&client_id=sk6CBTMciDoHkiXCD-GKdV5D4LrtLzCdy1yIGCLBWsA')
-      .then((response) => console.log(response))
-      .then((json) => console.log('result ', json.results))
-      .then(dispatch({ type: 'GET_IMAGES_SUCCESS', payload: json.results }))
+      .then((response) => console.log('reponse', response))
+      .then(dispatch(imageSuccess(response.data.results)))
+      .catch((error) => dispatch(imageFailure(error)))
   };
 }
 

@@ -7,7 +7,7 @@ import {
 
 const initialState = {
   searchTerm: '',
-  images: [{name: 'Cecilia'}],
+  images: [],
   fetching: false,
   error: null,
 }
