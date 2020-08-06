@@ -4,7 +4,7 @@ import { StyleSheet, Text, Image, ActivityIndicator, View, FlatList, SafeAreaVie
 import colors from '../config/colors';
 import Header from '../components/Header';
 import { connect, useDispatch } from 'react-redux';
-import { searchImagesBy, deleteImages, axiosSearch } from './../actions';
+import { searchImagesBy, deleteImages, axiosSearch, addNumber } from './../actions';
 
 function ImageList(props) {
   const [isLoading, setLoading] = useState(true);
@@ -20,7 +20,7 @@ function ImageList(props) {
     setData(images);
   }, []);
 
-  const { fetching, images, searchImagesBy, deleteImages, axiosSearch } = props;
+  const { fetching, images, searchImagesBy, deleteImages, axiosSearch, addNumber } = props;
 
   return (
     <SafeAreaView style={styles.container}>
@@ -30,10 +30,12 @@ function ImageList(props) {
       <Button title="load images" onPress={() => { axiosSearch() }}></Button>
 
       <Button title="get another" onPress={() => { deleteImages() }}></Button>
+      
+      <Button title="add number" onPress={() => { addNumber() }}></Button>
 
       {console.log('fetching 2', props)}
 
-      {fetching ? <ActivityIndicator/> : (
+      {/*fetching ? <ActivityIndicator/> : (
         <FlatList
           data={data}
           keyExtractor={({ id }, index) => id}
@@ -47,12 +49,12 @@ function ImageList(props) {
                 source={{
                   uri: item.urls.raw,
                 }}
-              />*/}
+              />}
 
             </View>
           )}
         />
-      )}
+            )*/}
     </SafeAreaView>
   )
 }
@@ -98,9 +100,10 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => {
   console.log('mapState ', state);
   return {
-    images: state.images,
-    fetching: state.fetching,
-    error: state.error
+    images: state.imagesReducer.images,
+    fetching: state.imagesReducer.fetching,
+    error: state.imagesReducer.error,
+    numbers: state.imagesReducer.numbers
   }
 };
 
@@ -108,7 +111,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => ({ 
   searchImagesBy: () => dispatch(searchImagesBy()),
   deleteImages: () => dispatch(deleteImages()),
-  axiosSearch: () => dispatch(axiosSearch()) 
+  addNumber: () => dispatch(addNumber()),
+  //axiosSearch: () => dispatch(axiosSearch()) 
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ImageList);
