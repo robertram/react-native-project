@@ -4,10 +4,10 @@ import { StyleSheet, View, SafeAreaView, Text, Button, FlatList, Image } from 'r
 //import { useDimensions, useDeviceOrientation } from '@react-native-community/hooks';
 import { connect, useDispatch } from 'react-redux';
 import { addNumber, axiosSearch } from '../actions';
-import colors from '../config/colors';
+import colors from '../constants/colors';
 import Header from '../components/Header';
 
-class Dimensions extends React.Component {
+class Home extends React.Component {
   componentDidMount() {
     this.props.axiosSearch();
   }
@@ -82,4 +82,4 @@ const mapDispatchToProps = (dispatch) => ({
   axiosSearch: () => dispatch(axiosSearch()),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Dimensions);
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Image, ImageBackground, View, SafeAreaView } from 'react-native';
-import colors from '../config/colors';
+import colors from '../constants/colors';
 
 export default function App() {
   return (

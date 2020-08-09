@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, Image, ActivityIndicator, View, FlatList, SafeAreaView, Button } from 'react-native';
-import colors from '../config/colors';
+import colors from '../constants/colors';
 import Header from '../components/Header';
 import { connect, useDispatch } from 'react-redux';
 import { searchImagesBy, deleteImages, axiosSearch, addNumber } from './../actions';

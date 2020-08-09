@@ -1,11 +1,12 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import DimensionsExample from './app/screens/DimensionsExample';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import imagesReducer from './app/reducers/imagesReducer';
 import thunk from 'redux-thunk';
 import promise from 'redux-promise';
+
+import HomeScreen from './app/screens/HomeScreen';
 
 const rootReducer = combineReducers({
   imagesReducer
@@ -20,7 +21,7 @@ const store = createStore(rootReducer, {}, enhancer);
 export default function App() {
   return (
     <Provider store={store}>
-      <DimensionsExample />
+      <HomeScreen />
     </Provider>
   );
 }

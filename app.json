@@ -22,6 +22,9 @@
     "web": {
       "favicon": "./app/assets/favicon.png"
     },
+    "androidStatusBar": {
+      "translucent": false
+    },
     "description": "Expo Test project "
   }
 }
