@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   View,
   StyleSheet,
@@ -7,13 +7,16 @@ import {
   Image,
   Text,
   ScrollView,
-  Keyboard,
+  TouchableOpacity,
 } from 'react-native';
 import { format } from 'date-fns';
+import { Entypo } from '@expo/vector-icons';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 import colors from '../constants/colors';
 import { ConversionInput } from '../components/ConversionInput';
 import { Button } from '../components/Button';
+import { KeyboardSpacer } from '../components/KeyboardSpacer';
 
 const screen = Dimensions.get('window');
 
@@ -23,7 +26,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.blue,
   },
   content: {
-    paddingTop: screen.height * 0.2,
+    paddingTop: screen.height * 0.1,
   },
   logoContainer: {
     alignItems: 'center',
@@ -54,9 +57,13 @@ const styles = StyleSheet.create({
   inputContainer: {
     marginBottom: 10,
   },
+  header: {
+    alignItems: 'flex-end',
+    marginHorizontal: 20,
+  },
 });
 
-export default () => {
+export default ({ navigation }) => {
   const baseCurrency = 'USD';
   const quoteCurrency = 'GBP';
   const conversionRate = 0.89824;
@@ -64,24 +71,16 @@ export default () => {
 
   const [scrollEnabled, setScrollEnabled] = useState(false);
 
-  useEffect(() => {
-    const showListener = Keyboard.addListener('keyboardDidShow', () =>
-      setScrollEnabled(true)
-    );
-    const hideListener = Keyboard.addListener('keyboardDidHide', () =>
-      setScrollEnabled(false)
-    );
-
-    return () => {
-      showListener.remove();
-      hideListener.remove();
-    };
-  }, []);
-
   return (
     <View style={styles.container}>
       <StatusBar barStyle="light-content" backgroundColor={colors.blue} />
       <ScrollView scrollEnabled={scrollEnabled}>
+        <SafeAreaView style={styles.header}>
+          <TouchableOpacity onPress={() => navigation.push('Options')}>
+            <Entypo name="cog" size={32} color={colors.white} />
+          </TouchableOpacity>
+        </SafeAreaView>
+
         <View style={styles.content}>
           <View style={styles.logoContainer}>
             <Image
@@ -118,7 +117,12 @@ export default () => {
             )}`}
           </Text>
           <Button text="Reverse Currencies" onPress={() => alert('todo!')} />
-          <View style={{ height: screen.height }} />
+          <View>
+            <TouchableOpacity onPress={() => navigation.push('Home')}>
+              <Text style={styles.text}>Go to images</Text>
+            </TouchableOpacity>
+          </View>
+          <KeyboardSpacer onToggle={visible => setScrollEnabled(visible)} />
         </View>
       </ScrollView>
     </View>

@@ -6,7 +6,8 @@ import imagesReducer from './app/reducers/imagesReducer';
 import thunk from 'redux-thunk';
 import promise from 'redux-promise';
 
-import HomeScreen from './app/screens/HomeScreen';
+//import HomeScreen from './app/screens/HomeScreen';
+import Navigation from './app/config/Navigation';
 
 const rootReducer = combineReducers({
   imagesReducer
@@ -21,7 +22,7 @@ const store = createStore(rootReducer, {}, enhancer);
 export default function App() {
   return (
     <Provider store={store}>
-      <HomeScreen />
+      <Navigation />
     </Provider>
   );
 }

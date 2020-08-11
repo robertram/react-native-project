@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, View, SafeAreaView, Text, Button, FlatList, Image } from 'react-native';
+import { StyleSheet, View, SafeAreaView, Text, Button, FlatList, Image, TouchableOpacity } from 'react-native';
 //import { useDimensions, useDeviceOrientation } from '@react-native-community/hooks';
 import { connect, useDispatch } from 'react-redux';
 import { addNumber, axiosSearch } from '../actions';
@@ -14,7 +14,7 @@ class Home extends React.Component {
   render() {
     return (
       <SafeAreaView style={[styles.container]}>
-        <Header></Header>
+        <StatusBar barStyle="dark-content" backgroundColor={colors.white} />
         <FlatList
           data={this.props.images}
           keyExtractor={({ id }, index) => id}
@@ -28,6 +28,11 @@ class Home extends React.Component {
                   uri: item.urls.thumb,
                 }}
               />
+              <View>
+                <TouchableOpacity onPress={() => this.props.navigation.push('ImageDetails')}>
+                  <Text>Go to images</Text>
+                </TouchableOpacity>
+              </View>
             </View>
           )}
         />

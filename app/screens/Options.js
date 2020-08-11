@@ -1,7 +1,13 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { SafeAreaView, ScrollView, Linking, Alert  } from 'react-native';
+import {
+  SafeAreaView,
+  ScrollView,
+  Linking,
+  Alert,
+  StatusBar,
+} from 'react-native';
 import { Entypo } from '@expo/vector-icons';
+
 import colors from '../constants/colors';
 import { RowItem, RowSeparator } from '../components/RowItem';
 
@@ -10,9 +16,11 @@ const openLink = url =>
     Alert.alert('Sorry, something went wrong.', 'Please try again later.')
   );
 
-export default function Options() {
+export default () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
+      <StatusBar barStyle="dark-content" backgroundColor={colors.white} />
+
       <ScrollView>
         <RowItem
           title="Themes"
@@ -28,12 +36,11 @@ export default function Options() {
           title="React Native Basics"
           onPress={() =>
             openLink(
-              'https://youtube.com'
+              'https://learn.handlebarlabs.com/p/react-native-basics-build-a-currency-converter'
             )
           }
           rightIcon={<Entypo name="export" size={20} color={colors.blue} />}
         />
-
 
         <RowSeparator />
 
@@ -45,5 +52,4 @@ export default function Options() {
       </ScrollView>
     </SafeAreaView>
   );
-}
-
+};
