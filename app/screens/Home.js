@@ -19,21 +19,21 @@ class Home extends React.Component {
           data={this.props.images}
           keyExtractor={({ id }, index) => id}
           renderItem={({ item }) => (
-            <View style={styles.box} key={item.id}>
-              <Text style={styles.title}>{item.alt_description}</Text>
-              <Image
-                resizeMode='contain'
-                style={styles.image}
-                source={{
-                  uri: item.urls.thumb,
-                }}
-              />
-              <View>
-                <TouchableOpacity onPress={() => this.props.navigation.push('ImageDetails')}>
-                  <Text>Go to images</Text>
-                </TouchableOpacity>
+
+            <TouchableOpacity onPress={() => this.props.navigation.push('ImageDetails', item)}>
+              <View style={styles.box} key={item.id}>
+                <Text style={styles.title}>{item.alt_description}</Text>
+                <Image
+                  resizeMode='contain'
+                  style={styles.image}
+                  source={{
+                    uri: item.urls.thumb,
+                  }}
+                />
+                <View>
+                </View>
               </View>
-            </View>
+            </TouchableOpacity>
           )}
         />
       </SafeAreaView>

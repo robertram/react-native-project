@@ -119,7 +119,7 @@ export default ({ navigation }) => {
           <Button text="Reverse Currencies" onPress={() => alert('todo!')} />
           <View>
             <TouchableOpacity onPress={() => navigation.push('Home')}>
-              <Text style={styles.text}>Go to images</Text>
+              <Text style={styles.textHeader}>Go to images</Text>
             </TouchableOpacity>
           </View>
           <KeyboardSpacer onToggle={visible => setScrollEnabled(visible)} />
