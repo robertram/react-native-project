@@ -14,27 +14,33 @@ const styles={
     backgroundColor: '#000',
     flexDirection: 'row',
     justifyContent: 'space-around',
-    aligItems: 'center'
+    aligItems: 'center',
   }, 
   buttonTitle: {
     color: '#fff'
   }
 }
 
-const Options = () => {
+const Options = ({navigation}) => {
   const webViewRef =useRef();
   const handleBackPress=()=>{
     webViewRef.current.goBack();
   }
+  const handleCloseWebview=()=>{
+    navigation.navigate('HomeScreen');
+  }
   return (
     <>
       <View style={styles.container}>
+          <TouchableOpacity onPress={handleCloseWebview} >
+            <Text style={styles.buttonTitle}>Close Webview</Text>
+          </TouchableOpacity>
           <TouchableOpacity onPress={handleBackPress} >
             <Text style={styles.buttonTitle}>Back</Text>
           </TouchableOpacity>
       </View>
       <WebView
-        source={{ uri: 'https://invest.omni.cr' }}
+        source={{ uri: 'http://192.168.0.22:3000/' }}
         style={{ marginTop: 0 }}
         ref={webViewRef}
         onNavigationStateChange={(state)=>{
