@@ -15,7 +15,7 @@ const MainStackScreen = () => (
       component={HomeScreen}
       options={{ headerShown: false }}
     />  
-    <MainStack.Screen name="Options" component={Options} />
+    <MainStack.Screen name="Options" component={Options} options={{ headerShown: false }}/>
     <MainStack.Screen name="Home" component={Home} />
     <MainStack.Screen name="ImageDetails" component={ImageDetails} />
   </MainStack.Navigator>

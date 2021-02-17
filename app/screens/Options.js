@@ -1,55 +1,48 @@
-import React from 'react';
+
+import React, {useRef} from 'react';
 import {
-  SafeAreaView,
-  ScrollView,
-  Linking,
-  Alert,
-  StatusBar,
+  View,
+  Text,
+  TouchableOpacity
 } from 'react-native';
-import { Entypo } from '@expo/vector-icons';
 
-import colors from '../constants/colors';
-import { RowItem, RowSeparator } from '../components/RowItem';
+import { WebView } from 'react-native-webview';
 
-const openLink = url =>
-  Linking.openURL(url).catch(() =>
-    Alert.alert('Sorry, something went wrong.', 'Please try again later.')
-  );
+const styles={
+  container: {
+    height: 40, 
+    backgroundColor: '#000',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    aligItems: 'center'
+  }, 
+  buttonTitle: {
+    color: '#fff'
+  }
+}
 
-export default () => {
+const Options = () => {
+  const webViewRef =useRef();
+  const handleBackPress=()=>{
+    webViewRef.current.goBack();
+  }
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <StatusBar barStyle="dark-content" backgroundColor={colors.white} />
-
-      <ScrollView>
-        <RowItem
-          title="Themes"
-          onPress={() => alert('todo!')}
-          rightIcon={
-            <Entypo name="chevron-right" size={20} color={colors.blue} />
-          }
-        />
-
-        <RowSeparator />
-
-        <RowItem
-          title="React Native Basics"
-          onPress={() =>
-            openLink(
-              'https://learn.handlebarlabs.com/p/react-native-basics-build-a-currency-converter'
-            )
-          }
-          rightIcon={<Entypo name="export" size={20} color={colors.blue} />}
-        />
-
-        <RowSeparator />
-
-        <RowItem
-          title="React Native by Example"
-          onPress={() => openLink('https://reactnativebyexample.com')}
-          rightIcon={<Entypo name="export" size={20} color={colors.blue} />}
-        />
-      </ScrollView>
-    </SafeAreaView>
+    <>
+      <View style={styles.container}>
+          <TouchableOpacity onPress={handleBackPress} >
+            <Text style={styles.buttonTitle}>Back</Text>
+          </TouchableOpacity>
+      </View>
+      <WebView
+        source={{ uri: 'https://invest.omni.cr' }}
+        style={{ marginTop: 0 }}
+        ref={webViewRef}
+        onNavigationStateChange={(state)=>{
+          const back = state.canGoBack;
+        }}
+      />
+    </>
   );
 };
+
+export default Options;
