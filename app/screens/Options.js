@@ -29,6 +29,14 @@ const Options = ({navigation}) => {
   const handleCloseWebview=()=>{
     navigation.navigate('HomeScreen');
   }
+  const onMessage = () => {
+    handleCloseWebview();
+  }
+
+  const INJECTED_JAVASCRIPT = `(function() {
+    //document.getElementById('Home').innerHTML = 'Holaaaa';
+})();`;
+
   return (
     <>
       <View style={styles.container}>
@@ -40,12 +48,14 @@ const Options = ({navigation}) => {
           </TouchableOpacity>
       </View>
       <WebView
-        source={{ uri: 'http://192.168.0.22:3000/' }}
+        source={{ uri: 'http://192.168.0.4:3000/' }}
         style={{ marginTop: 0 }}
         ref={webViewRef}
         onNavigationStateChange={(state)=>{
           const back = state.canGoBack;
         }}
+        onMessage={onMessage}
+        injectedJavaScript={INJECTED_JAVASCRIPT}
       />
     </>
   );
